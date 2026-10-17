@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>译页 · PDF 中文翻译</title>
+<style>
+:root{--ink:#20251f;--muted:#6b736b;--paper:#f7f7f2;--green:#315d48;--line:#dfe4dc}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif}
+header{height:70px;padding:0 clamp(20px,6vw,88px);display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);background:#fbfcf8}
+.brand{font-weight:800;letter-spacing:-.04em;font-size:22px}.brand span{color:var(--green)}.pill{font-size:12px;border:1px solid var(--line);border-radius:99px;padding:8px 12px;color:var(--muted)}
+main{max-width:1100px;margin:auto;padding:60px 22px 70px}.eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--green);font-weight:800}
+h1{font-size:clamp(34px,6vw,64px);line-height:1.08;letter-spacing:-.055em;max-width:760px;margin:16px 0}h1 em{font-family:Georgia,serif;font-weight:400;color:var(--green)}.lead{max-width:620px;color:var(--muted);font-size:16px;line-height:1.8}
+.panel{margin-top:36px;background:white;border:1px solid var(--line);border-radius:20px;padding:clamp(18px,4vw,34px);box-shadow:0 18px 55px #1b2b1a0a}
+.drop{border:1.5px dashed #aebcaf;border-radius:15px;padding:35px 18px;text-align:center;background:#fbfcf9;transition:.2s}.drop.over{border-color:var(--green);background:#eff5ef}.upload-icon{width:48px;height:48px;border-radius:15px;background:#e9f0e8;display:grid;place-items:center;margin:0 auto 15px;font-size:24px}.drop h2{font-size:18px;margin:8px}.drop p{font-size:13px;color:var(--muted);margin:8px}.choose{display:inline-block;margin-top:13px;background:var(--green);color:white;border:0;border-radius:10px;padding:12px 18px;font-weight:700;cursor:pointer}.settings{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:22px}.field label{display:block;font-size:12px;font-weight:700;color:var(--muted);margin-bottom:8px}.field select,.field input{width:100%;border:1px solid var(--line);border-radius:10px;padding:12px;background:white;color:var(--ink);font-size:14px}.file-row{display:none;align-items:center;gap:12px;margin-top:18px;padding:13px;background:#f4f7f2;border-radius:12px}.file-row strong{font-size:14px;overflow-wrap:anywhere}.file-row small{display:block;color:var(--muted);margin-top:4px}.go{width:100%;padding:15px;border:0;border-radius:11px;background:var(--green);color:white;font-size:15px;font-weight:800;margin-top:20px;cursor:pointer}.go:disabled{opacity:.45;cursor:not-allowed}.status{display:none;margin-top:16px;padding:13px;border-radius:10px;background:#f4f7f2;font-size:13px;line-height:1.6}.features{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:32px}.feature{padding:18px 0;border-top:1px solid var(--line)}.feature b{display:block;margin-bottom:8px;font-size:14px}.feature p{margin:0;color:var(--muted);font-size:13px;line-height:1.7}.notice{font-size:12px;color:var(--muted);line-height:1.7;margin-top:22px}footer{border-top:1px solid var(--line);padding:25px;text-align:center;color:var(--muted);font-size:12px}
+@media(max-width:650px){main{padding-top:38px}.settings,.features{grid-template-columns:1fr}.features{gap:4px}.pill{display:none}}
+</style></head>
+<body>
+<header><div class="brand">译<span>页</span> / YIYE</div><div class="pill">PDF → 简体中文</div></header>
+<main>
+<div class="eyebrow">READ BEYOND LANGUAGE</div>
+<h1>让每一页，都能<br><em>读懂原意。</em></h1>
+<p class="lead">上传英文或日文 PDF，生成中文译本。为杂志、图文书、产品手册和研究资料而设计，尽可能保留原有页面尺寸、图片与版面结构。</p>
+<section class="panel">
+<div class="drop" id="drop">
+<div class="upload-icon">↥</div><h2>把 PDF 放在这里</h2><p>支持英文 / 日文 PDF · 单文件最大 80 MB</p>
+<input id="file" type="file" accept="application/pdf,.pdf" hidden>
+<button class="choose" id="choose">选择 PDF 文件</button>
+<div class="file-row" id="fileRow"><div>📄</div><div style="text-align:left;min-width:0"><strong id="fileName"></strong><small id="fileSize"></small></div></div>
+</div>
+<div class="settings">
+<div class="field"><label for="lang">原文语言</label><select id="lang"><option value="auto">自动识别</option><option value="English">英文</option><option value="Japanese">日文</option></select></div>
+<div class="field"><label for="mode">翻译模式</label><select id="mode"><option value="A">A · 原版复刻（尽量保留版式）</option><option value="B">B · 阅读优化（更优先适配中文）</option><option value="C">C · 双语对照（保留原 PDF 并附中文对照页）</option></select></div>
+</div>
+<button class="go" id="go" disabled>开始翻译 →</button>
+<div class="status" id="status" role="status"></div>
+<p class="notice">提示：此工具会尽量保留页面尺寸、图片和文字位置。复杂彩页、文字压在照片上的页面、艺术字体及扫描版 PDF 可能需要进一步校对或 OCR。请勿上传含敏感信息的文件。</p>
+</section>
+<div class="features">
+<div class="feature"><b>01 / 版面优先</b><p>保留页面大小、图像和大致文字位置，尽量维持原始阅读体验。</p></div>
+<div class="feature"><b>02 / 英日中互译</b><p>面向英文与日文资料，译为简体中文，适合长文、标题和说明文字。</p></div>
+<div class="feature"><b>03 / 导出 PDF</b><p>完成后下载中文 PDF，便于保存、打印和离线阅读。</p></div>
+</div>
+</main><footer>译页 YIYE · 让阅读没有语言边界</footer>
+<script>
+const fileInput=document.getElementById('file'),choose=document.getElementById('choose'),drop=document.getElementById('drop'),go=document.getElementById('go'),row=document.getElementById('fileRow'),statusBox=document.getElementById('status');let chosen=null;
+choose.onclick=()=>fileInput.click();
+fileInput.onchange=()=>setFile(fileInput.files[0]);
+function setFile(f){if(!f)return;if(f.type!=='application/pdf'&&!f.name.toLowerCase().endsWith('.pdf')){alert('请选择 PDF 文件');return}chosen=f;document.getElementById('fileName').textContent=f.name;document.getElementById('fileSize').textContent=(f.size/1024/1024).toFixed(2)+' MB';row.style.display='flex';go.disabled=false;statusBox.style.display='none'}
+drop.addEventListener('dragover',e=>{e.preventDefault();drop.classList.add('over')});drop.addEventListener('dragleave',()=>drop.classList.remove('over'));drop.addEventListener('drop',e=>{e.preventDefault();drop.classList.remove('over');setFile(e.dataTransfer.files[0])});
+go.onclick=async()=>{if(!chosen)return;go.disabled=true;go.textContent='正在翻译，请稍候…';statusBox.style.display='block';statusBox.textContent='正在上传并提取文字。较长 PDF 可能需要几分钟，请保持页面打开。';try{const fd=new FormData();fd.append('file',chosen);fd.append('source_lang',document.getElementById('lang').value);const res=await fetch('/api/translate?source_lang='+encodeURIComponent(document.getElementById('lang').value)+'&mode='+encodeURIComponent(document.getElementById('mode').value),{method:'POST',body:fd});if(!res.ok){let msg='翻译失败';try{const d=await res.json();msg=d.detail||d.error||msg}catch{}throw new Error(msg)}const blob=await res.blob();const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=chosen.name.replace(/\.pdf$/i,'')+(document.getElementById('mode').value==='C'?'_双语对照.pdf':'_中文翻译.pdf');document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);statusBox.textContent='翻译完成，中文 PDF 已开始下载。';}catch(e){statusBox.textContent='暂时无法完成：'+e.message+'。请检查服务端配置，或查看 README。'}finally{go.disabled=false;go.textContent='开始翻译 →'}};
+</script></body></html>

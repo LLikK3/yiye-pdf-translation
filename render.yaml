@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: yiye-pdf-translation
+    runtime: docker
+    plan: starter
+    healthCheckPath: /
+    envVars:
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: OPENAI_MODEL
+        value: gpt-4.1-mini
+      - key: PDF_CJK_FONT
+        value: /usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc
+      - key: MAX_UPLOAD_MB
+        value: "80"
